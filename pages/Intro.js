@@ -92,7 +92,7 @@ const Intro = function () {
                 <Image
                   src={devImg}
                   priority
-                  className="absolute object-cover scale-125 top-[-20px] left-[40px]"
+                  className="absolute object-cover scale-125 top-[-20px] left-[30px]"
                   alt="Agnesh S Kumar"
                 />
               </div>
