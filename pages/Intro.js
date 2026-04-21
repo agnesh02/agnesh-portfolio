@@ -91,10 +91,8 @@ const Intro = function () {
               <div className="relative h-64 w-64 overflow-hidden rounded-full ring-4 ring-white/80 shadow-2xl dark:ring-indigo-500/40 lg:h-[22rem] lg:w-[22rem]">
                 <Image
                   src={devImg}
-                  width={400}
-                  height={300}
                   priority
-                  className="h-full w-full object-cover"
+                  className="absolute object-cover scale-125 top-[-20px] left-[40px]"
                   alt="Agnesh S Kumar"
                 />
               </div>
