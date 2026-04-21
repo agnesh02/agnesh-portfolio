@@ -2,126 +2,14 @@ import React, { useRef, useEffect, useId, useContext, useState } from "react";
 import * as d3 from "d3";
 import AppContext from "../state/AppContext";
 
-const RAW_GRAPH = {
-  nodes: [
-    {
-      id: "center",
-      group: 1,
-      text: "You",
-      img: "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg",
-    },
-    {
-      id: "node1",
-      group: 2,
-      text: "Java",
-      img: "https://img.icons8.com/color/256/java-coffee-cup-logo.png",
-    },
-    {
-      id: "node2",
-      group: 2,
-      text: "React",
-      img: "https://img.icons8.com/plasticine/256/react.png",
-    },
-    {
-      id: "node3",
-      group: 2,
-      text: "Android",
-      img: "https://img.icons8.com/external-smashingstocks-flat-smashing-stocks/256/external-Android-notification-and-mailing-smashingstocks-flat-smashing-stocks.png",
-    },
-    {
-      id: "node4",
-      group: 2,
-      text: "JavaScript",
-      img: "https://img.icons8.com/color/256/javascript.png",
-    },
-    {
-      id: "node5",
-      group: 2,
-      text: "Kotlin",
-      img: "https://img.icons8.com/?size=160&id=WloV0S7gH4RH&format=png",
-    },
-    {
-      id: "node6",
-      group: 2,
-      text: "Flutter",
-      img: "https://img.icons8.com/color/512/flutter.png",
-    },
-    {
-      id: "node7",
-      group: 2,
-      text: "MQTT",
-      img: "https://hornerautomation.eu/wp-content/uploads/2021/11/mqtt-ver.png",
-    },
-    {
-      id: "node8",
-      group: 2,
-      text: "Firebase",
-      img: "https://cdn4.iconfinder.com/data/icons/google-i-o-2016/512/google_firebase-2-512.png",
-    },
-    {
-      id: "node9",
-      group: 2,
-      text: "GitHub",
-      img: "https://user-images.githubusercontent.com/103866722/177941491-1947c6b0-6e38-4880-8bd7-01dac36165df.png",
-    },
-    {
-      id: "node10",
-      group: 2,
-      text: "Dart",
-      img: "https://static-00.iconduck.com/assets.00/dart-icon-255x256-hc3l9lk3.png",
-    },
-    {
-      id: "node11",
-      group: 2,
-      text: "Git",
-      img: "https://cdn-icons-png.flaticon.com/512/25/25231.png",
-    },
-    {
-      id: "node12",
-      group: 2,
-      text: "VS Code",
-      img: "https://icons.veryicon.com/png/o/business/vscode-program-item-icon/vscode.png",
-    },
-    {
-      id: "node13",
-      group: 2,
-      text: "Android Studio",
-      img: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/android-studio-icon.png",
-    },
-    {
-      id: "node14",
-      group: 2,
-      text: "iOS",
-      img: "https://cdn.iconscout.com/icon/free/png-256/free-ios-apple-logo-icon-download-in-svg-png-gif-file-formats--operating-system-browser-and-pack-logos-icons-572947.png?f=webp&w=256",
-    },
-  ],
-  links: [
-    { source: "node3", target: "node1" },
-    { source: "center", target: "node2" },
-    { source: "center", target: "node3" },
-    { source: "node2", target: "node4" },
-    { source: "center", target: "node5" },
-    { source: "center", target: "node6" },
-    { source: "center", target: "node7" },
-    { source: "center", target: "node8" },
-    { source: "node3", target: "node9" },
-    { source: "node6", target: "node10" },
-    { source: "center", target: "node11" },
-    { source: "center", target: "node12" },
-    { source: "node3", target: "node13" },
-    { source: "node6", target: "node14" },
-    { source: "node6", target: "node3" },
-    { source: "node2", target: "node3" },
-    { source: "node2", target: "node14" },
-  ],
-};
+import { RAW_SKILL_GRAPH } from "../data/skillGraph";
 
 function cloneGraph() {
-  const nodes = RAW_GRAPH.nodes.map((n) => ({
+  const nodes = RAW_SKILL_GRAPH.nodes.map((n) => ({
     ...n,
     img: typeof n.img === "string" ? n.img.trim() : n.img,
   }));
-  const links = RAW_GRAPH.links.map((l) => ({ ...l }));
+  const links = RAW_SKILL_GRAPH.links.map((l) => ({ ...l }));
   return { nodes, links };
 }
 
