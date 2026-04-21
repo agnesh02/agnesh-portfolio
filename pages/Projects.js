@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useContext, useState, useMemo, useEffect } from "react";
+import { SiGooglecloud, SiNextdotjs } from "react-icons/si";
 import AppContext from "../state/AppContext";
 import { FEATURED_PROJECTS, OTHER_PROJECTS } from "../data/resumeContent";
 import { formatTechLabel } from "../data/techLabels";
@@ -45,19 +46,34 @@ const TECH_IMAGES = {
   mqtt: require("../public/assets/mqtt_ver.png"),
   snapAr: require("../public/assets/snap_ar.png"),
   ble: require("../public/assets/ble.png"),
-  kotlin: require("../public/assets/android_img.png"),
-  java: require("../public/assets/android_img.png"),
-  jni: require("../public/assets/android_img.png"),
-  cpp: require("../public/assets/android_img.png"),
-  modbus: require("../public/assets/mqtt_ver.png"),
-  sqlite: require("../public/assets/mySql_img.png"),
-  sqflite: require("../public/assets/mySql_img.png"),
-  gcp: require("../public/assets/firebase_img.png"),
-  nextjs: require("../public/assets/html_img.png"),
+};
+
+const TECH_VECTOR_ICONS = {
+  nextjs: SiNextdotjs,
+  gcp: SiGooglecloud,
 };
 
 function getTechnologyImageUrl(technologyUsed) {
   return TECH_IMAGES[technologyUsed] ?? null;
+}
+
+function getTechInitials(label) {
+  const words = String(label || "")
+    .replace(/[^a-zA-Z0-9+]+/g, " ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (!words.length) return "?";
+  if (words.length === 1) return words[0].slice(0, 1).toUpperCase();
+  return words
+    .slice(0, 2)
+    .map((w) => w.slice(0, 1).toUpperCase())
+    .join("");
+}
+
+function getTechVectorIcon(technologyUsed) {
+  return TECH_VECTOR_ICONS[technologyUsed] ?? null;
 }
 
 function projectTitleAbbrev(title) {
@@ -283,11 +299,18 @@ const Projects = () => {
             {currentProject.technologiesUsed.map((tech) => {
               const src = getTechnologyImageUrl(tech);
               const label = formatTechLabel(tech);
+              const VectorIcon = getTechVectorIcon(tech);
+              const chipClass = darkMode
+                ? "inline-flex items-center gap-2.5 rounded-xl border border-slate-600 bg-slate-900/85 py-2 pl-2 pr-3 shadow-sm text-slate-100"
+                : "inline-flex items-center gap-2.5 rounded-xl border border-slate-200/90 bg-white/95 py-2 pl-2 pr-3 shadow-sm text-slate-800";
+              const iconWellClass = darkMode
+                ? "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-slate-600/60 bg-slate-800/90"
+                : "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-slate-200/70 bg-white";
               return (
                 <li key={tech}>
                   {src ? (
-                    <span className="inline-flex items-center gap-2.5 rounded-xl border border-slate-200/90 bg-white py-2 pl-2 pr-3 shadow-sm dark:border-slate-600 dark:bg-slate-900/80">
-                      <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white dark:bg-slate-800">
+                    <span className={chipClass}>
+                      <span className={iconWellClass}>
                         <Image
                           src={src}
                           alt={label}
@@ -296,13 +319,27 @@ const Projects = () => {
                           className="max-h-7 w-auto object-contain"
                         />
                       </span>
-                      <span className="text-sm font-medium text-slate-800 dark:text-slate-100">
-                        {label}
+                      <span className="text-sm font-medium">{label}</span>
+                    </span>
+                  ) : VectorIcon ? (
+                    <span className={chipClass}>
+                      <span className={iconWellClass}>
+                        <VectorIcon className="h-6 w-6" />
                       </span>
+                      <span className="text-sm font-medium">{label}</span>
                     </span>
                   ) : (
-                    <span className="inline-flex items-center rounded-xl border border-indigo-200/80 bg-indigo-50/90 px-3 py-2 text-sm font-medium text-indigo-900 dark:border-indigo-500/35 dark:bg-indigo-950/50 dark:text-indigo-100">
-                      {label}
+                    <span className={chipClass}>
+                      <span
+                        className={`inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-sm font-bold tracking-wide ${
+                          darkMode
+                            ? "border border-slate-500/60 bg-slate-800/90 text-slate-100"
+                            : "border border-slate-300/70 bg-white text-slate-700"
+                        }`}
+                      >
+                        {getTechInitials(label)}
+                      </span>
+                      <span>{label}</span>
                     </span>
                   )}
                 </li>

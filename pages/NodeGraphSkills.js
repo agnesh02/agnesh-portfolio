@@ -82,8 +82,6 @@ const NodeGraphSkills = function ({ isLargeScreen }) {
 
     const cx = nodes.find((n) => n.id === "center");
     if (cx) {
-      cx.fx = centerX;
-      cx.fy = centerY;
       cx.x = centerX;
       cx.y = centerY;
     }
@@ -151,8 +149,8 @@ const NodeGraphSkills = function ({ isLargeScreen }) {
       .attr("fill", (d) => (d.id === "center" ? fillCenter : fillSatellite))
       .attr("stroke", strokeNode)
       .attr("stroke-width", mobile ? 1.5 : 2)
-      .style("cursor", (d) => (d.id === "center" ? "default" : "grab"));
-    node.filter((d) => d.id !== "center").call(satelliteDrag(simulation));
+      .style("cursor", "grab");
+    node.call(satelliteDrag(simulation));
 
     const images = g
       .append("g")
@@ -161,21 +159,13 @@ const NodeGraphSkills = function ({ isLargeScreen }) {
       .data(nodes.filter((d) => d.id !== "center"))
       .join("image")
       .attr("href", (d) => d.img)
-      .attr("width", imgSize)
-      .attr("height", imgSize)
-      .attr("preserveAspectRatio", "xMidYMid slice")
+      .attr("width", (d) => imgSize * (d.iconScale || 1))
+      .attr("height", (d) => imgSize * (d.iconScale || 1))
+      .attr("preserveAspectRatio", "xMidYMid meet")
       .style("pointer-events", "none")
       .attr("clip-path", `url(#clip-${clipId})`);
 
     simulation.on("tick", () => {
-      const c = nodes.find((n) => n.id === "center");
-      if (c) {
-        c.fx = centerX;
-        c.fy = centerY;
-        c.x = centerX;
-        c.y = centerY;
-      }
-
       link
         .attr("x1", (d) => d.source.x)
         .attr("y1", (d) => d.source.y)
@@ -184,7 +174,10 @@ const NodeGraphSkills = function ({ isLargeScreen }) {
 
       node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
 
-      images.attr("transform", (d) => `translate(${d.x - imgOffset}, ${d.y - imgOffset})`);
+      images.attr("transform", (d) => {
+        const nodeSize = imgSize * (d.iconScale || 1);
+        return `translate(${d.x - nodeSize / 2}, ${d.y - nodeSize / 2})`;
+      });
     });
 
     return () => {

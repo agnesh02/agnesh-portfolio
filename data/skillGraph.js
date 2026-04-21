@@ -20,7 +20,8 @@ export const RAW_SKILL_GRAPH = {
       id: "n2",
       group: 2,
       text: "Android",
-      img: "https://img.icons8.com/external-smashingstocks-flat-smashing-stocks/256/external-Android-notification-and-mailing-smashing-stocks-flat-smashing-stocks.png",
+      img: "/assets/android_img.png",
+      iconScale: 0.78,
     },
     {
       id: "n3",
@@ -38,7 +39,7 @@ export const RAW_SKILL_GRAPH = {
       id: "n5",
       group: 2,
       text: "Next.js",
-      img: "https://img.icons8.com/windows/256/nextjs.png",
+      img: "/vercel.svg",
     },
     {
       id: "n6",
@@ -56,7 +57,7 @@ export const RAW_SKILL_GRAPH = {
       id: "n8",
       group: 2,
       text: "Modbus",
-      img: "https://img.icons8.com/color/256/data-transfer.png",
+      img: "/assets/ble.png",
     },
     {
       id: "n9",
