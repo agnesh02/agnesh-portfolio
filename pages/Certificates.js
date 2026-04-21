@@ -33,16 +33,13 @@ const Certificates = function () {
   };
 
   return (
-    <section className="flex flex-grow flex-col align-middle">
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+    <section className="glass-panel flex flex-grow flex-col rounded-[1.75rem] p-4 lg:p-8">
+      <p className="mb-6 text-center text-xs font-semibold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-300">
+        Credentials
+      </p>
+      <div className="flex w-full justify-center">
         {loading ? (
-          <div className="flex h-[500px] w-full items-center justify-center">
+          <div className="flex h-[240px] w-full items-center justify-center sm:h-[320px] lg:h-[500px]">
             <svg
               className="h-8 w-8 animate-spin text-blue-500"
               xmlns="http://www.w3.org/2000/svg"
@@ -67,26 +64,25 @@ const Certificates = function () {
           </div>
         ) : (
           <Image
-            style={{ width: "1000px", height: "500px", objectFit: "contain" }}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
             src={images[currentIndex]}
             alt="Carousel Slide"
-            className="w-full rounded-lg object-cover"
+            className="h-[240px] w-full rounded-2xl bg-slate-100 object-contain p-2 dark:bg-slate-800 sm:h-[320px] lg:h-[500px]"
             width={1000} // Set width for the Image component
             height={500} // Set height for the Image component
           />
         )}
       </div>
 
-      <div className="mt-4 flex justify-center">
+      <div className="mt-6 flex justify-center gap-4">
         <button
-          className="rounded border border-blue-500 bg-transparent py-2 px-4 font-semibold text-blue-700 hover:border-transparent hover:bg-blue-500 hover:text-white"
+          className="rounded-full border border-indigo-500 bg-transparent px-5 py-2 font-semibold text-indigo-700 transition hover:border-transparent hover:bg-indigo-500 hover:text-white dark:text-indigo-200"
           onClick={goToPrevSlide}
         >
           Prev
         </button>
-        <div className="px-5"></div>
         <button
-          className="rounded border border-blue-500 bg-transparent py-2 px-4 font-semibold text-blue-700 hover:border-transparent hover:bg-blue-500 hover:text-white"
+          className="rounded-full border border-indigo-500 bg-transparent px-5 py-2 font-semibold text-indigo-700 transition hover:border-transparent hover:bg-indigo-500 hover:text-white dark:text-indigo-200"
           onClick={goToNextSlide}
         >
           Next

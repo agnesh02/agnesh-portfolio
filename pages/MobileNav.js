@@ -27,12 +27,12 @@ const MobileNav = () => {
   };
 
   const itemStyle =
-    "text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium font-poppins_light";
+    "block rounded-lg px-3 py-2 text-base font-medium font-poppins_light text-slate-100 transition hover:bg-white/15";
 
   return (
     <div>
       <button
-        className="fixed top-2.5 left-6 z-30 rounded-lg bg-gray-800 p-2 text-white"
+        className="rounded-lg bg-white/10 p-2 text-white ring-1 ring-white/30"
         onClick={toggleNav}
       >
         <svg
@@ -53,9 +53,9 @@ const MobileNav = () => {
       {isOpen && (
         <div
           ref={menuRef}
-          className="fixed top-0 left-0 z-20 h-screen w-64 bg-gray-800 py-6 px-4 text-white"
+          className="fixed left-0 top-0 z-40 h-screen w-64 bg-slate-900/95 px-4 py-6 text-white shadow-2xl backdrop-blur"
         >
-          <div className="mt-14 text-left">
+          <div className="mt-8 text-left">
             <ul>
               <li
                 style={

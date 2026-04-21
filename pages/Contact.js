@@ -71,28 +71,32 @@ const Contact = function () {
   };
 
   return (
-    <section id="contact" className={`h-screen ${darkMode ? "bg-gray-900" : "bg-white"}`}>
+    <section
+      id="contact"
+      className="mt-10 min-h-[70vh] scroll-mt-28"
+    >
       <div
-        className={`mx-auto mt-32 max-w-[700px] rounded-3xl px-5 py-10 ${
-          darkMode ? "bg-white" : "bg-gray-100"
-        } lg:px-10`}
+        className={`mx-auto mt-4 max-w-[760px] rounded-[1.75rem] border px-5 py-10 shadow-2xl lg:px-10 ${
+          darkMode
+            ? "border-slate-600/40 bg-slate-900/75 text-slate-100 backdrop-blur-xl"
+            : "border-slate-200/90 bg-white/90 text-slate-900 backdrop-blur-xl"
+        } `}
       >
-        <h2
-          className={`mb-12 font-poppins_medium text-3xl font-bold ${
-            darkMode ? "text-black" : "text-gray-900"
-          }`}
-        >
+        <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-300">
+          Let&apos;s talk
+        </p>
+        <h2 className="mb-8 font-poppins_medium text-3xl font-bold text-slate-900 dark:text-white">
           Contact / Enquire
         </h2>
 
         <div className="form-group mb-6">
           <input
             type="text"
-            className={`form-control m-0 block w-full rounded border border-solid ${
+            className={`form-control m-0 block w-full rounded-xl border border-solid ${
               darkMode
-                ? "border-gray-500 bg-white text-black" // Darker border in dark mode
-                : "border-gray-300 bg-white text-gray-700"
-            } px-3 py-1.5 text-base transition ease-in-out focus:border-blue-600 focus:outline-none`}
+                ? "border-slate-600 bg-slate-950/50 text-slate-100 placeholder:text-slate-500"
+                : "border-slate-300 bg-white text-slate-800"
+            } px-4 py-3 text-base transition ease-in-out focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/25`}
             id="nameInput"
             placeholder="Name"
           />
@@ -104,11 +108,11 @@ const Contact = function () {
         <div className="form-group mb-6">
           <input
             type="email"
-            className={`form-control m-0 block w-full rounded border border-solid ${
+            className={`form-control m-0 block w-full rounded-xl border border-solid ${
               darkMode
-                ? "border-gray-500 bg-white text-black" // Darker border in dark mode
-                : "border-gray-300 bg-white text-gray-700"
-            } px-3 py-1.5 text-base transition ease-in-out focus:border-blue-600 focus:outline-none`}
+                ? "border-slate-600 bg-slate-950/50 text-slate-100 placeholder:text-slate-500"
+                : "border-slate-300 bg-white text-slate-800"
+            } px-4 py-3 text-base transition ease-in-out focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/25`}
             id="emailInput"
             placeholder="Email address"
           />
@@ -119,11 +123,11 @@ const Contact = function () {
 
         <div className="form-group mb-6">
           <textarea
-            className={`form-control m-0 block w-full rounded border border-solid ${
+            className={`form-control m-0 block w-full rounded-xl border border-solid ${
               darkMode
-                ? "border-gray-500 bg-white text-black" // Darker border in dark mode
-                : "border-gray-300 bg-white text-gray-700"
-            } px-3 py-1.5 text-base transition ease-in-out focus:border-blue-600 focus:outline-none`}
+                ? "border-slate-600 bg-slate-950/50 text-slate-100 placeholder:text-slate-500"
+                : "border-slate-300 bg-white text-slate-800"
+            } px-4 py-3 text-base transition ease-in-out focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/25`}
             id="messageInput"
             rows="3"
             placeholder="Message"
@@ -135,10 +139,10 @@ const Contact = function () {
 
         <button
           type="submit"
-          className={`w-full rounded-md px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out ${
+          className={`w-full rounded-full px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white shadow-lg transition duration-150 ease-in-out ${
             darkMode
-              ? "bg-blue-600 hover:bg-blue-700"
-              : "bg-blue-500 hover:bg-blue-600"
+              ? "bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500"
+              : "bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500"
           }`}
           onClick={() => sendData()}
           disabled={isSubmitting} // Disable button when submitting

@@ -9,29 +9,25 @@ import {
 } from "react-icons/si";
 
 const AdditionalInfo = ({ isLargeScreen }) => {
+  const itemClass = `flex flex-col items-center justify-center ${
+    isLargeScreen ? "h-40 w-60 rounded-2xl" : "h-40 w-40 rounded-3xl"
+  } py-4 px-4 shadow-lg transition hover:-translate-y-1 hover:shadow-xl`;
+
   return (
-    <div>
-      <div
-        className="flex justify-center"
-        style={{ width: "100%", marginTop: -10 }}
-      >
-        <h3 className="mb-12 mt-10 flex flex-col items-center py-2 text-center text-2xl font-semibold text-gray-800 dark:text-white sm:justify-start lg:flex-row lg:justify-center">
-          <span className="text-blue-600 dark:text-orange-500">
-            Technologies used to develop this website
-          </span>
-        </h3>
+    <div className="mt-12 border-t border-slate-200/80 pt-10 dark:border-slate-700/80">
+      <div className="flex justify-center">
+        <div className="mb-8 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-300">
+            This portfolio
+          </p>
+          <h3 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">
+            Built with
+          </h3>
+        </div>
       </div>
 
-      {/* Grid layout for responsive display */}
-      <div className="grid grid-cols-2 justify-items-center gap-8 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-        {/* Next JS */}
-        <div
-          className={`flex flex-col items-center justify-center ${
-            isLargeScreen ? "h-40 w-60" : "h-40 w-40"
-          } ${
-            isLargeScreen ? "rounded-2xl" : "rounded-full"
-          } bg-[#000000] py-4 px-4 shadow-lg hover:text-white`}
-        >
+      <div className="grid grid-cols-2 justify-items-center gap-6 sm:grid-cols-3">
+        <div className={`${itemClass} bg-[#000000] hover:text-white`}>
           <div className="flex justify-center text-6xl">
             <TbBrandNextjs size={95} color="white" />
           </div>
@@ -40,14 +36,7 @@ const AdditionalInfo = ({ isLargeScreen }) => {
           </h2>
         </div>
 
-        {/* Tailwind CSS */}
-        <div
-          className={`flex flex-col items-center justify-center ${
-            isLargeScreen ? "h-40 w-60" : "h-40 w-40"
-          } ${
-            isLargeScreen ? "rounded-2xl" : "rounded-full"
-          } bg-[#38bdf8] py-4 px-4 shadow-lg hover:text-white`}
-        >
+        <div className={`${itemClass} bg-[#38bdf8] hover:text-white`}>
           <div className="flex justify-center text-6xl">
             <SiTailwindcss size={75} />
           </div>
@@ -56,14 +45,7 @@ const AdditionalInfo = ({ isLargeScreen }) => {
           </h2>
         </div>
 
-        {/* Firebase */}
-        <div
-          className={`flex flex-col items-center justify-center ${
-            isLargeScreen ? "h-40 w-60" : "h-40 w-40"
-          } ${
-            isLargeScreen ? "rounded-2xl" : "rounded-full"
-          } bg-[#FFCA28] py-4 px-4 shadow-lg hover:text-white`}
-        >
+        <div className={`${itemClass} bg-[#FFCA28] hover:text-white`}>
           <div className="flex justify-center text-6xl">
             <SiFirebase size={90} />
           </div>
@@ -72,14 +54,7 @@ const AdditionalInfo = ({ isLargeScreen }) => {
           </h2>
         </div>
 
-        {/* VS Code */}
-        <div
-          className={`flex flex-col items-center justify-center ${
-            isLargeScreen ? "h-40 w-60" : "h-40 w-40"
-          } ${
-            isLargeScreen ? "rounded-2xl" : "rounded-full"
-          } bg-[#007ACC] py-4 px-4 shadow-lg hover:text-white`}
-        >
+        <div className={`${itemClass} bg-[#007ACC] hover:text-white`}>
           <div className="flex justify-center text-6xl">
             <SiVisualstudiocode color="white" size={90} />
           </div>
@@ -88,14 +63,7 @@ const AdditionalInfo = ({ isLargeScreen }) => {
           </h2>
         </div>
 
-        {/* React */}
-        <div
-          className={`flex flex-col items-center justify-center ${
-            isLargeScreen ? "h-40 w-60" : "h-40 w-40"
-          } ${
-            isLargeScreen ? "rounded-2xl" : "rounded-full"
-          } bg-[#61DAFB] py-4 px-4 shadow-lg hover:text-white`}
-        >
+        <div className={`${itemClass} bg-[#61DAFB] hover:text-white`}>
           <div className="flex justify-center text-6xl">
             <SiReact size={75} />
           </div>
@@ -104,14 +72,7 @@ const AdditionalInfo = ({ isLargeScreen }) => {
           </h2>
         </div>
 
-        {/* ChatGPT */}
-        <div
-          className={`flex flex-col items-center justify-center ${
-            isLargeScreen ? "h-40 w-60" : "h-40 w-40"
-          } ${
-            isLargeScreen ? "rounded-2xl" : "rounded-full"
-          } bg-[#10A37F] py-4 px-4 shadow-lg hover:text-white`}
-        >
+        <div className={`${itemClass} bg-[#10A37F] hover:text-white`}>
           <div className="flex justify-center text-6xl">
             <SiOpenai size={75} />
           </div>

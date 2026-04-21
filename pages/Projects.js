@@ -289,23 +289,27 @@ const Projects = () => {
   };
 
   return (
-    <div
-      className="flex min-h-screen flex-col items-start p-3"
-      style={{ marginTop: 10 }}
-    >
-      <div className="flex min-w-full flex-row items-center justify-between py-6">
+    <div className="glass-panel mt-2 flex min-h-screen flex-col items-start rounded-[1.75rem] p-4 lg:p-8">
+      <div className="mb-2 w-full text-center lg:mb-4 lg:text-left">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-300">
+          Selected work
+        </p>
+        <h1 className="mt-1 font-poppins_semi_bold text-2xl text-slate-900 dark:text-white lg:text-3xl">
+          Projects
+        </h1>
+      </div>
+      <div className="flex w-full flex-row items-center justify-between gap-2 py-4">
         <div className="flex flex-col justify-center">
           <button
             onClick={() => handlePrev()}
-            className="h-12 w-12 transform rounded-full bg-indigo-600 text-xl text-white shadow-md transition-all duration-300 hover:scale-110 hover:bg-indigo-800"
+            className="h-10 w-10 transform rounded-full bg-indigo-600 text-xl text-white shadow-md transition-all duration-300 hover:scale-110 hover:bg-indigo-800 lg:h-12 lg:w-12"
           >
             &lt;
           </button>
         </div>
         <div className="flex w-full justify-center">
           <div
-            className="relative flex h-[500px] w-full items-center justify-center rounded-lg"
-            style={{ marginTop: -50 }}
+            className="relative flex h-[240px] w-full max-w-5xl items-center justify-center overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800 sm:h-[320px] lg:h-[500px]"
           >
             {loadingImage && (
               <div className="absolute flex h-full w-full items-center justify-center bg-opacity-50">
@@ -334,14 +338,14 @@ const Projects = () => {
             )}
             <Image
               style={{
-                width: "1000px",
-                height: "500px",
+                width: "100%",
+                height: "100%",
                 objectFit: "contain",
-                borderRadius: "16px",
+                borderRadius: "14px",
               }}
               src={currentProject.imageUrl}
               alt={currentProject.title}
-              className="w-full rounded-lg object-cover"
+              className="w-full rounded-2xl object-contain p-3"
               onLoadingComplete={() => setLoadingImage(false)}
             />
           </div>
@@ -349,7 +353,7 @@ const Projects = () => {
         <div className="flex flex-col justify-center">
           <button
             onClick={() => handleNext()}
-            className="h-12 w-12 transform rounded-full bg-indigo-600 text-xl text-white shadow-md transition-all duration-300 hover:scale-110 hover:bg-indigo-800"
+            className="h-10 w-10 transform rounded-full bg-indigo-600 text-xl text-white shadow-md transition-all duration-300 hover:scale-110 hover:bg-indigo-800 lg:h-12 lg:w-12"
           >
             &gt;
           </button>
@@ -357,15 +361,15 @@ const Projects = () => {
       </div>
 
       <div
-        className={`mx-auto mt-8 max-w-3xl text-start ${
+        className={`mx-auto mt-4 max-w-4xl text-start ${
           darkMode ? "text-white" : "text-black"
         }`}
       >
-        <h2 className="mb-4 text-3xl font-bold">{currentProject.title}</h2>
-        <p className="mb-6 text-lg">{currentProject.description}</p>
+        <h2 className="mb-4 text-2xl font-bold lg:text-3xl">{currentProject.title}</h2>
+        <p className="mb-6 text-base text-slate-700 dark:text-slate-300 lg:text-lg">{currentProject.description}</p>
 
         <h3 className="mb-4 text-xl font-semibold">Features</h3>
-        <ul className="mx-auto space-y-4 text-left text-lg">
+        <ul className="mx-auto space-y-3 text-left text-base lg:text-lg">
           {currentProject.features.map((feature, index) => (
             <li key={index} className="flex items-center space-x-3">
               <svg
@@ -387,12 +391,12 @@ const Projects = () => {
           ))}
         </ul>
 
-        <h3 className="mt-8 mb-4 text-xl font-semibold">Technologies Used</h3>
+        <h3 className="mb-4 mt-8 text-xl font-semibold">Technologies Used</h3>
         <div className="flex items-center justify-center pb-5 pt-3">
           <div className="flex items-center justify-between">
             <button
               onClick={() => handlePrevTechnology()}
-              className="h-12 w-12 transform rounded-full bg-indigo-600 text-xl text-white shadow-md transition-all duration-300 hover:scale-110 hover:bg-indigo-800"
+              className="h-10 w-10 transform rounded-full bg-indigo-600 text-xl text-white shadow-md transition-all duration-300 hover:scale-110 hover:bg-indigo-800 lg:h-12 lg:w-12"
             >
               &lt;
             </button>
@@ -424,7 +428,7 @@ const Projects = () => {
               )}
               <Image
                 style={{
-                  width: "200px",
+                  width: "160px",
                   height: "70px",
                   objectFit: "contain",
                   backgroundColor: "white",
@@ -441,7 +445,7 @@ const Projects = () => {
             </div>
             <button
               onClick={() => handleNextTechnology()}
-              className="h-12 w-12 transform rounded-full bg-indigo-600 text-xl text-white shadow-md transition-all duration-300 hover:scale-110 hover:bg-indigo-800"
+              className="h-10 w-10 transform rounded-full bg-indigo-600 text-xl text-white shadow-md transition-all duration-300 hover:scale-110 hover:bg-indigo-800 lg:h-12 lg:w-12"
             >
               &gt;
             </button>
