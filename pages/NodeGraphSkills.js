@@ -1,22 +1,88 @@
-import React, { useRef, useEffect, useId, useContext, useState } from "react";
+import React, { useRef, useEffect, useContext, useState } from "react";
 import * as d3 from "d3";
+import { renderToStaticMarkup } from "react-dom/server";
+import {
+  SiAndroid,
+  SiBluetooth,
+  SiFlutter,
+  SiGit,
+  SiGooglecloud,
+  SiKotlin,
+  SiNextdotjs,
+  SiReact,
+  SiSqlite,
+} from "react-icons/si";
+import { FaCode, FaMicrochip, FaWifi, FaJava } from "react-icons/fa";
 import AppContext from "../state/AppContext";
 
 import { RAW_SKILL_GRAPH } from "../data/skillGraph";
 
+const SKILL_ICONS = {
+  kotlin: SiKotlin,
+  android: SiAndroid,
+  flutter: SiFlutter,
+  reactnative: SiReact,
+  reactNative: SiReact,
+  "next.js": SiNextdotjs,
+  nextjs: SiNextdotjs,
+  ble: SiBluetooth,
+  mqtt: FaWifi,
+  modbus: FaMicrochip,
+  gcp: SiGooglecloud,
+  java: FaJava,
+  jni: FaCode,
+  sqlite: SiSqlite,
+  git: SiGit,
+};
+
+function normalizeTechName(text) {
+  return String(text || "")
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .trim();
+}
+
+function getVectorIconDataUrl(node, darkMode) {
+  const explicitKey = node?.icon;
+  const normalizedExplicitKey = normalizeTechName(explicitKey);
+  const normalizedTextKey = normalizeTechName(node?.text);
+  const Icon =
+    SKILL_ICONS[explicitKey] ||
+    SKILL_ICONS[normalizedExplicitKey] ||
+    SKILL_ICONS[normalizedTextKey];
+  if (!Icon) return "";
+
+  const color = darkMode ? "#e2e8f0" : "#334155";
+  const svgMarkup = renderToStaticMarkup(<Icon size={24} color={color} />);
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svgMarkup)}`;
+}
+
 function cloneGraph() {
   const nodes = RAW_SKILL_GRAPH.nodes.map((n) => ({
     ...n,
-    img: typeof n.img === "string" ? n.img.trim() : n.img,
+    icon: n.icon ?? null,
   }));
   const links = RAW_SKILL_GRAPH.links.map((l) => ({ ...l }));
   return { nodes, links };
 }
 
+function nodeInitials(text) {
+  const words = String(text || "")
+    .replace(/[^a-zA-Z0-9+]+/g, " ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  if (!words.length) return "?";
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return words
+    .slice(0, 2)
+    .map((w) => w.slice(0, 1).toUpperCase())
+    .join("");
+}
+
 const NodeGraphSkills = function ({ isLargeScreen }) {
   const svgRef = useRef(null);
   const wrapRef = useRef(null);
-  const clipId = useId().replace(/:/g, "");
   const { darkMode } = useContext(AppContext);
   const [size, setSize] = useState({ width: 0, height: 0 });
 
@@ -66,8 +132,8 @@ const NodeGraphSkills = function ({ isLargeScreen }) {
 
     const radiusCenter = mobile ? 26 : 34;
     const radiusSat = mobile ? 28 : 40;
-    const imgSize = mobile ? 44 : 58;
-    const imgOffset = imgSize / 2;
+    // Keep icons comfortably inside node circles across varying icon viewBoxes.
+    const iconSize = Math.max(18, radiusSat * 1.2);
 
     const linkDistance = mobile ? Math.min(130, width * 0.38) : 260;
     const chargeStrength = mobile ? -380 : -240;
@@ -84,6 +150,8 @@ const NodeGraphSkills = function ({ isLargeScreen }) {
     if (cx) {
       cx.x = centerX;
       cx.y = centerY;
+      cx.fx = centerX;
+      cx.fy = centerY;
     }
 
     let i = 0;
@@ -102,15 +170,6 @@ const NodeGraphSkills = function ({ isLargeScreen }) {
       .attr("viewBox", `0 0 ${width} ${height}`)
       .attr("preserveAspectRatio", "xMidYMid meet")
       .style("max-width", "100%");
-
-    const defs = svg.append("defs");
-    defs
-      .append("clipPath")
-      .attr("id", `clip-${clipId}`)
-      .append("circle")
-      .attr("cx", imgOffset)
-      .attr("cy", imgOffset)
-      .attr("r", imgOffset - 2);
 
     const simulation = d3
       .forceSimulation(nodes)
@@ -156,14 +215,40 @@ const NodeGraphSkills = function ({ isLargeScreen }) {
       .append("g")
       .attr("class", "images")
       .selectAll("image")
-      .data(nodes.filter((d) => d.id !== "center"))
+      .data(
+        nodes
+          .filter((d) => d.id !== "center")
+          .map((d) => {
+            d.iconDataUrl = getVectorIconDataUrl(d, darkMode);
+            return d;
+          })
+          .filter((d) => d.iconDataUrl)
+      )
       .join("image")
-      .attr("href", (d) => d.img)
-      .attr("width", (d) => imgSize * (d.iconScale || 1))
-      .attr("height", (d) => imgSize * (d.iconScale || 1))
+      .attr("href", (d) => d.iconDataUrl)
+      .attr("width", (d) => iconSize * (d.iconScale || 1))
+      .attr("height", (d) => iconSize * (d.iconScale || 1))
       .attr("preserveAspectRatio", "xMidYMid meet")
-      .style("pointer-events", "none")
-      .attr("clip-path", `url(#clip-${clipId})`);
+      .style("pointer-events", "none");
+
+    const nodeTextFill = darkMode ? "rgba(226,232,240,0.95)" : "rgba(30,41,59,0.92)";
+    const fallbackLabels = g
+      .append("g")
+      .attr("class", "fallback-labels")
+      .selectAll("text")
+      .data(
+        nodes.filter(
+          (d) => d.id !== "center" && !getVectorIconDataUrl(d, darkMode)
+        )
+      )
+      .join("text")
+      .text((d) => nodeInitials(d.text))
+      .attr("text-anchor", "middle")
+      .attr("dominant-baseline", "middle")
+      .attr("fill", nodeTextFill)
+      .style("font-weight", 700)
+      .style("font-size", mobile ? "12px" : "14px")
+      .style("pointer-events", "none");
 
     simulation.on("tick", () => {
       link
@@ -175,15 +260,17 @@ const NodeGraphSkills = function ({ isLargeScreen }) {
       node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
 
       images.attr("transform", (d) => {
-        const nodeSize = imgSize * (d.iconScale || 1);
+        const nodeSize = iconSize * (d.iconScale || 1);
         return `translate(${d.x - nodeSize / 2}, ${d.y - nodeSize / 2})`;
       });
+
+      fallbackLabels.attr("x", (d) => d.x).attr("y", (d) => d.y);
     });
 
     return () => {
       simulation.stop();
     };
-  }, [size, isLargeScreen, darkMode, clipId]);
+  }, [size, isLargeScreen, darkMode]);
 
   function satelliteDrag(simulation) {
     return d3

@@ -1,6 +1,25 @@
 import Image from "next/image";
 import { useContext, useState, useMemo, useEffect } from "react";
-import { SiGooglecloud, SiNextdotjs } from "react-icons/si";
+import {
+  SiFirebase,
+  SiAndroid,
+  SiMysql,
+  SiHtml5,
+  SiCss3,
+  SiPhp,
+  SiJavascript,
+  SiPython,
+  SiFlutter,
+  SiReact,
+  SiSnapchat,
+  SiBluetooth,
+  SiGooglecloud,
+  SiNextdotjs,
+  SiKotlin,
+  SiCplusplus,
+  SiSqlite,
+} from "react-icons/si";
+import { FaMicrochip, FaCode, FaWifi, FaJava } from "react-icons/fa";
 import AppContext from "../state/AppContext";
 import { FEATURED_PROJECTS, OTHER_PROJECTS } from "../data/resumeContent";
 import { formatTechLabel } from "../data/techLabels";
@@ -31,31 +50,30 @@ function resolveProjectImage(project) {
   return null;
 }
 
-const TECH_IMAGES = {
-  firebase: require("../public/assets/firebase_img.png"),
-  android: require("../public/assets/android_img.png"),
-  mySql: require("../public/assets/mySql_img.png"),
-  html: require("../public/assets/html_img.png"),
-  css: require("../public/assets/css_img.png"),
-  php: require("../public/assets/php_img.png"),
-  ajax: require("../public/assets/ajax_img.png"),
-  python: require("../public/assets/python_img.png"),
-  flutter: require("../public/assets/flutter.png"),
-  reactNative: require("../public/assets/react.png"),
-  react: require("../public/assets/react.png"),
-  mqtt: require("../public/assets/mqtt_ver.png"),
-  snapAr: require("../public/assets/snap_ar.png"),
-  ble: require("../public/assets/ble.png"),
-};
-
 const TECH_VECTOR_ICONS = {
+  firebase: SiFirebase,
+  android: SiAndroid,
+  mySql: SiMysql,
+  html: SiHtml5,
+  css: SiCss3,
+  php: SiPhp,
+  ajax: SiJavascript,
+  python: SiPython,
+  flutter: SiFlutter,
+  reactNative: SiReact,
+  react: SiReact,
+  mqtt: FaWifi,
+  snapAr: SiSnapchat,
+  ble: SiBluetooth,
   nextjs: SiNextdotjs,
   gcp: SiGooglecloud,
+  kotlin: SiKotlin,
+  java: FaJava,
+  jni: FaCode,
+  cpp: SiCplusplus,
+  modbus: FaMicrochip,
+  sqlite: SiSqlite,
 };
-
-function getTechnologyImageUrl(technologyUsed) {
-  return TECH_IMAGES[technologyUsed] ?? null;
-}
 
 function getTechInitials(label) {
   const words = String(label || "")
@@ -297,7 +315,6 @@ const Projects = () => {
           </p>
           <ul className="flex flex-wrap gap-3">
             {currentProject.technologiesUsed.map((tech) => {
-              const src = getTechnologyImageUrl(tech);
               const label = formatTechLabel(tech);
               const VectorIcon = getTechVectorIcon(tech);
               const chipClass = darkMode
@@ -308,20 +325,7 @@ const Projects = () => {
                 : "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-slate-200/70 bg-white";
               return (
                 <li key={tech}>
-                  {src ? (
-                    <span className={chipClass}>
-                      <span className={iconWellClass}>
-                        <Image
-                          src={src}
-                          alt={label}
-                          width={28}
-                          height={28}
-                          className="max-h-7 w-auto object-contain"
-                        />
-                      </span>
-                      <span className="text-sm font-medium">{label}</span>
-                    </span>
-                  ) : VectorIcon ? (
+                  {VectorIcon ? (
                     <span className={chipClass}>
                       <span className={iconWellClass}>
                         <VectorIcon className="h-6 w-6" />
